@@ -49,6 +49,10 @@ void Can::Controller::Transmitter::processTransmitCycle(void) {
     }
 }
 
+unsigned long Can::Controller::Transmitter::getTickCount(void) {
+    return _tickCountMs;
+}
+
 ISR(TIMER0_COMP_vect) {
     Can::Controller::Transmitter::processTransmitCycle();
 }

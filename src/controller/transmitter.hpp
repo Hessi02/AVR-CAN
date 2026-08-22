@@ -15,7 +15,7 @@ public:
     unsigned char getMessageCount(void) const;
 
     static void processTransmitCycle(void);
-    static void incrementTickCount(void);
+    static unsigned long getTickCount(void);
 
 private:
     static inline unsigned long _tickCountMs = 0;
