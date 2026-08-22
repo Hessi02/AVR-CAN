@@ -35,7 +35,7 @@ void Can::Controller::Driver::transmit(
         for (std::size_t i = 0; i < payloadLength; i++)
             CANMSG = data[i];
 
-        CANCDMOB |= (1 << CONMOB0) | (payloadLength & 0x0f);
+        CANCDMOB = (1 << CONMOB0) | (payloadLength & 0x0f);
 
         while (!(CANSTMOB & (1 << TXOK)))
             ;
