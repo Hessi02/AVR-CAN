@@ -1,13 +1,13 @@
 #ifndef __CAN_CONTROLLER_RECEIVER_HPP__
 #define __CAN_CONTROLLER_RECEIVER_HPP__
 
-#include "model/cyclicMessage.hpp"
+#include <model/cyclicMessage.hpp>
 
 namespace Can::Controller {
 
 class Receiver {
 public:
-    void awaitMessage(Model::Message& message);
+    bool awaitMessage(Model::Message& message, const unsigned int& timeoutMs = 0);
 
     void addCyclicMessage(Model::CyclicMessage& message);
 

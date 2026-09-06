@@ -1,16 +1,27 @@
 #include "receiver.hpp"
 
-#include "controller/driver.hpp"
+#include <util/delay.h>
+#include <controller/driver.hpp>
 
-void Can::Controller::Receiver::awaitMessage(Model::Message& message) {
+bool Can::Controller::Receiver::awaitMessage(Model::Message& message, const unsigned int& timeoutMs) {
     Driver& driver = Driver::getInstance();
     driver.addRxMessage(message.getIdentifier(), message.getPayloadSize());
     driver.setReceiverInstance(this);
 
-    while (!message.getUpdateFlag())
-        ;
+    unsigned int iterator = 0;
+    bool messageReceived = true;
+
+    while (!message.getUpdateFlag()) {
+        if (timeoutMs > 0 && iterator++ >= timeoutMs) {
+            messageReceived = false;
+            break;
+        } 
+        
+        _delay_ms(1);
+    }
 
     driver.removeRxMessage(message.getIdentifier());
+    return messageReceived;
 }
 
 void Can::Controller::Receiver::addCyclicMessage(
